@@ -1,0 +1,28 @@
+name: Verificar archivo Dockerfile
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - '*'
+
+jobs:
+  check-dockerfile:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar el código del repositorio
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      # 2. Verificar que el archivo Dockerfile exista
+      - name: Verificar existencia de Dockerfile
+        run: |
+          if [ -f "Dockerfile" ]; then
+            echo " El archivo Dockerfile existe."
+          else
+            echo " Error: El archivo Dockerfile NO existe en la raíz del repositorio."
+            exit 1
+          fi
